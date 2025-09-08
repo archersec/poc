@@ -8,7 +8,7 @@ Ubuntu 20.04
 
 **Description**
 
-Null pointer dereference in function connection_transition_h2 in src/connections.c in commit through 83eadca2 of lighttpd/lighttpd1.4 allows remote attacker to cause a Denial of Service attack via sending a PRI request.
+NULL pointer dereference in function connection_transition_h2 in src/connections.c in lighttpd/lighttpd1.4 through commit 83eadca2 allows remote attacker to cause a Denial of Service via sending a PRI request to the server.
 
 **Analysis**
 
