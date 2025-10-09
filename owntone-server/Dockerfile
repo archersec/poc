@@ -30,6 +30,7 @@ RUN apt-get -y install \
     libasound2-dev libxml2-dev libgcrypt20-dev libavahi-client-dev zlib1g-dev \
     libevent-dev libplist-dev libsodium-dev libjson-c-dev libwebsockets-dev \
     libcurl4-openssl-dev libprotobuf-c-dev avahi-daemon
+RUN apt-get -y install libmxml-dev
 
 # Add a new user ubuntu, pass: ubuntu
 RUN groupadd ubuntu && \

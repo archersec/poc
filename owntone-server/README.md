@@ -12,7 +12,7 @@ NULL pointer dereference in function parse_meta in src/httpd_daap.c in owntone-s
 
 **Analysis**
 
-When parsing a DAAP request (pattern: `^/databases/[[:digit:]]+/groups$`) with an empty `meta` parameter, function `daap_reply_groups` calls `httpd_query_value_find` at src/httpd_daap.c:1647 and `param` is assigned an empty string. Function `parse_meta` calls `metastr = strdup(param)` at src/httpd_daap.c:606 and `metastr` is also an empty string. Therefore, `strchr(ptr + 1, ',')` causes a heap-buffer-overflow. If OwnTone is not compiled with ASan options, function `daap_reply_groups` will raise SIGSEGV at line 617 due to NULL pointer dereference.
+When parsing a DAAP request (pattern: `^/databases/[[:digit:]]+/groups$`) with an empty `meta` parameter, function `daap_reply_groups` calls `evhttp_find_header` at src/httpd_daap.c:1680 and `param` is assigned an empty string. Function `parse_meta` calls `metastr = strdup(param)` at src/httpd_daap.c:628 and `metastr` is also an empty string. Therefore, `field` becomes NULL at line 639, and the call to `strlen` at line 646 causes a NULL pointer dereference.
 
 **Reproduction method**
 
