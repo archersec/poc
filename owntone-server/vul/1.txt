@@ -1,0 +1,2 @@
+GET /databases/1/groups?group-type=albums&meta= HTTP/1.1
+
