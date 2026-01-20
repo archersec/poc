@@ -1,0 +1,37 @@
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 10afdffa..609fc052 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -153,7 +153,8 @@ owntone_SOURCES = main.c \
+ 	outputs/plist_wrap.h \
+ 	$(LIBWEBSOCKETS_SRC) \
+ 	$(GPERF_SRC) \
+-	$(ANTLR_SRC) 
++	$(ANTLR_SRC) \
++	../sqlext/sqlext.c
+ 
+ # built by maintainers, and distributed. Clean with maintainer-clean
+ BUILT_SOURCES = \
+diff --git a/src/db.c b/src/db.c
+index a1d9cce6..7c650497 100644
+--- a/src/db.c
++++ b/src/db.c
+@@ -6801,6 +6801,8 @@ db_pragma_set_mmap_size(int mmap_size)
+ #undef Q_TMPL
+ }
+ 
++int sqlite3_extension_init(sqlite3 *db, char **pzErrMsg, const sqlite3_api_routines *pApi);
++
+ static int
+ db_open(void)
+ {
+@@ -6833,7 +6835,8 @@ db_open(void)
+     }
+ 
+   errmsg = NULL;
+-  ret = sqlite3_load_extension(hdl, PKGLIBDIR "/" PACKAGE_NAME "-sqlext.so", NULL, &errmsg);
++  // ret = sqlite3_load_extension(hdl, PKGLIBDIR "/" PACKAGE_NAME "-sqlext.so", NULL, &errmsg);
++  ret = sqlite3_extension_init(hdl, &errmsg, NULL);
+   if (ret != SQLITE_OK)
+     {
+       if (errmsg)
